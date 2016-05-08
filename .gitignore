@@ -301,3 +301,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+App.config
+PokerBot.csproj
+Properties/AssemblyInfo.cs
