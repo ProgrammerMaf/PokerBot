@@ -16,7 +16,6 @@ namespace SingleRoung
         public Player Dealer;
         public SingleRound()
         {
-            // Инициализировать типы, хранящие инфу о раунде.
             throw new NotImplementedException();
         }
         private void CollectBets()
@@ -31,10 +30,16 @@ namespace SingleRoung
         {
 
         }
-        public void PlayRound(ICardDeck deck)
+        public void PlayRound(ICardDeck deck, IReadOnlyDictionary<Player, double> players)
         {
-            throw new NotImplementedException();
-            // Сбор ставок(опрос игроков), добавление карт на стол и определение победителя.
+            CollectBets();
+            AddCards(3);
+            CollectBets();
+            AddCards(1);
+            CollectBets();
+            AddCards(1);
+            CollectBets();
+            SelectWinners();
         }
     }
 }
