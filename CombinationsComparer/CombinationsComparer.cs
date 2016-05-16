@@ -9,7 +9,7 @@ namespace CombinationsComparer
 {
     public static class CombinationsComparer
     {
-        public static int CompareCombinations(Card[] firstPlayerHand, Card[] secondPlayerHand, Card onTable)
+        public static int CompareCombinations(Card[] firstPlayerHand, Card[] secondPlayerHand, Card[] onTable)
         {
             //> 0, if first player wins
             //< 0, if second player wins
