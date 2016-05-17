@@ -11,9 +11,9 @@ namespace SingleRoung
     public class SingleRound
     {
         public List<double?> Bets;
-        public List<Player> Winners;
+        public List<RandomPlayer> Winners;
         public int PlayersCount;
-        public Player Dealer;
+        public RandomPlayer Dealer;
         public SingleRound()
         {
             throw new NotImplementedException();
@@ -30,7 +30,7 @@ namespace SingleRoung
         {
 
         }
-        public void PlayRound(ICardDeck deck, IReadOnlyDictionary<Player, double> players)
+        public void PlayRound(ICardDeck deck, IReadOnlyDictionary<RandomPlayer, double> players)
         {
             CollectBets();
             AddCards(3);
