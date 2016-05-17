@@ -9,6 +9,10 @@ namespace PokerPlayer
 {
     public interface IPlayer
     {
-        double? MakeBet(List<PlayerInRoundState> players, int selfNumber, Card[] hand, Card[] onTable);
+        double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable);
+
+        double GetSmallBet();
+        double GetBigBet();
+
     }
 }
