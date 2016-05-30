@@ -6,7 +6,7 @@ namespace PokerObjects
     {
         public readonly char Suit;
         public readonly int Rank;
-
+        public const int MaxRank = 12;
         public Card(char suit, int rank)
         {
             Suit = suit;

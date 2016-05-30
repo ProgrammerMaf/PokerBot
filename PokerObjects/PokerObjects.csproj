@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Bet.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="Combinations.cs" />
     <Compile Include="PlayerInRoundState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

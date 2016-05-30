@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssistanceBot", "Assistance
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserPlayer", "UserPlayer\UserPlayer.csproj", "{026E6997-7A5E-46A7-B42C-AFB15F5D86E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CombinationsComparer.Test", "CombinationsComparer.Test\CombinationsComparer.Test.csproj", "{4DAE3739-83D5-42CC-B260-BCC28DEF93E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{026E6997-7A5E-46A7-B42C-AFB15F5D86E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{026E6997-7A5E-46A7-B42C-AFB15F5D86E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{026E6997-7A5E-46A7-B42C-AFB15F5D86E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DAE3739-83D5-42CC-B260-BCC28DEF93E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DAE3739-83D5-42CC-B260-BCC28DEF93E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DAE3739-83D5-42CC-B260-BCC28DEF93E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DAE3739-83D5-42CC-B260-BCC28DEF93E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,5 +89,6 @@ Global
 		{A151FF53-9FD2-4336-B254-6B57FB363CEA} = {C2ECBF2D-7436-4074-B69E-FB59862FB16C}
 		{CF95891C-09BC-4F8E-8103-C6099C3D9845} = {CFE55968-7C7F-4D8D-B239-8F4E7800AB5B}
 		{026E6997-7A5E-46A7-B42C-AFB15F5D86E0} = {C2ECBF2D-7436-4074-B69E-FB59862FB16C}
+		{4DAE3739-83D5-42CC-B260-BCC28DEF93E0} = {C2ECBF2D-7436-4074-B69E-FB59862FB16C}
 	EndGlobalSection
 EndGlobal

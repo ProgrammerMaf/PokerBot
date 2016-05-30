@@ -115,7 +115,7 @@ namespace SingleRoung
         {
             var count = list.Count();
             if (index > count)
-            {
+        {
                 var newIndex = index - (index/count)*count;
                 return list.ElementAt(newIndex);
             }
