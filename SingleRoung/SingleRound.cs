@@ -84,7 +84,8 @@ namespace SingleRoung
                 for (var i = 1; i <= PlayersCount; i++)
                 {
                     var bet = Players.GetShift(Dealer + i)
-                        .MakeBet(Bets.Sum(e => e ?? 0), PlayersCount, betsRound.Max(e => e ?? 0), null);
+                        .MakeBet(
+                        Bets.Sum(e => e ?? 0), PlayersCount, betsRound.Max(e => e ?? 0), null);
                     Bets.Add(bet);
                     betsRound.Add(bet);
                 }
@@ -98,7 +99,8 @@ namespace SingleRoung
                 for (var i = 1; i <= PlayersCount; i++)
                 {
                     var bet = Players.GetShift(Dealer + i)
-                        .MakeBet(Bets.Sum(e => e ?? 0), PlayersCount, betsRound.Max(e => e ?? 0), null);
+                        .MakeBet(
+                        Bets.Sum(e => e ?? 0), PlayersCount, betsRound.Max(e => e ?? 0), null);
                     Bets.Add(bet);
                     betsRound.Add(bet);
                 }
