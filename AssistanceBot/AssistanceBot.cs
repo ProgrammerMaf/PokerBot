@@ -7,11 +7,22 @@ using PokerObjects;
 
 namespace AssistanceBot
 {
-    public static class AssistanceBot
+    public class AssistanceBot : IAssistanceBot
     {
-        public static double? OfferBet(double cash, int playersOnTable, double callCost, Card[] hand, Card[] onTable)
+        private IDatabaseUnit databaseUnit;
+        private IProbabilityUnit probabilityUnit;
+
+        public AssistanceBot(IDatabaseUnit databaseUnit, IProbabilityUnit probabilityUnit)
         {
-            throw new NotImplementedException();
+            this.databaseUnit = databaseUnit;
+            this.probabilityUnit = probabilityUnit;
+        }
+        public Bet OfferBet(GameState state, double moneyToCall, Card[] hand, Card[] onTable)
+        {
+            var opponentsAggressiveness = databaseUnit.GetAgressiveness(state.RemainedPlayersState);
+            var opponentsLuckiness = databaseUnit.GetLuckiness(state.RemainedPlayersState);
+            var winningProbability = probabilityUnit.GetWinProbability(hand, onTable, state.RemainedPlayersState.Count);
+            return null;
         }
     }
 }
