@@ -41,6 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssistanceBot.cs" />
+    <Compile Include="GameState.cs" />
+    <Compile Include="IAssistanceBot.cs" />
+    <Compile Include="IDatabaseUnit.cs" />
+    <Compile Include="IProbabilityUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,7 @@ namespace AssistanceBot
             var opponentsAggressiveness = databaseUnit.GetAgressiveness(state.RemainedPlayersState);
             var opponentsLuckiness = databaseUnit.GetLuckiness(state.RemainedPlayersState);
             var winningProbability = probabilityUnit.GetWinProbability(hand, onTable, state.RemainedPlayersState.Count);
+            bool wantToPlay = winningProbability >= (1 - opponentsLuckiness) * opponentsAggressiveness / 2;
             return null;
         }
     }
