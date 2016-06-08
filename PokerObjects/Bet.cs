@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PokerObjects
+﻿namespace PokerObjects
 {
     public class Bet
     {

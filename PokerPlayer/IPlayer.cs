@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PokerObjects;
+﻿using PokerObjects;
 
 namespace PokerPlayer
 {
-    private interface IPlayer
+    public interface IPlayer
     {
-        double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable);
+        Bet MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable);
 
-        double GetSmallBet();
-        double GetBigBet();
+        Bet GetSmallBlind();
+        Bet GetBigBlind();
 
     }
 }

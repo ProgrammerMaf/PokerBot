@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PokerObjects;
 
 namespace CombinationsComparer
 {
     public static class CombinationsDetector
     {
-        static int[] IndexArray = new[] { 0, 1, 2, 3, 4, 5, 6 };
+        static int[] IndexArray = { 0, 1, 2, 3, 4, 5, 6 };
         static Card[] SelectCards(Card[] sortedCards, params int[] selected)
         {
             var unselected = IndexArray.Where(index => !selected.Contains(index));
@@ -219,11 +217,11 @@ namespace CombinationsComparer
                         var comparsion = CompareEqualCombinations(firstPlayerCombination, secondPlayerCombination);
                         return comparsion;
                     }
-                    else if (firstPlayerCombination == null)
+                    if (firstPlayerCombination == null)
                     {
                         return -1;
                     }
-                    else if (secondPlayerCombination == null)
+                    if (secondPlayerCombination == null)
                     {
                         return 1;
                     }
