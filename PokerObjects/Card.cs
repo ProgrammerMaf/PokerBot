@@ -1,4 +1,6 @@
-﻿namespace PokerObjects
+﻿using System;
+
+namespace PokerObjects
 {
     public class Card
     {

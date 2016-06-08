@@ -1,16 +1,18 @@
-﻿using System;
+﻿using PokerObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using PokerObjects;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PokerPlayer
 {
-    public class RandomBettingPlayer : BasePlayer
+    public class Player : PlayerBase
     {
         public string Id;
         private readonly Random randomGenerator;
 
-        public RandomBettingPlayer(string id, List<Card> cards, int cashe) 
+        public Player(string id, List<Card> cards, int cashe) 
             : base(cards, cashe)
         {
             Id = id;
@@ -26,7 +28,7 @@ namespace PokerPlayer
             var value = minValue + randomNumber * (maxValue - minValue);
             return Math.Round(value, 1);
         }
-        private double? MakeBet(List<PlayerInRoundState> players, int selfNumber, Card[] hand, Card[] onTable)
+        public double? MakeBet(List<PlayerInRoundState> players, int selfNumber, Card[] hand, Card[] onTable)
         {     
             double maxBetValue = players.Select(e => e.MadeBet.Value).Aggregate(Math.Max);
             double maxNewBet = players[selfNumber].RemainedCash;
@@ -40,17 +42,17 @@ namespace PokerPlayer
             return minNewBet;   //Call
         }
 
-        public override Bet MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable)
+        public override double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable)
         {
             throw new NotImplementedException();
         }
 
-        public override Bet GetSmallBet()
+        public override double GetSmallBet()
         {
             throw new NotImplementedException();
         }
 
-        public override Bet GetBigBet()
+        public override double GetBigBet()
         {
             throw new NotImplementedException();
         }

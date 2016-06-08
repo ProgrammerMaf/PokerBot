@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 using PokerObjects;
+using System.Collections.Generic;
 
 namespace CombinationsComparer.Test
 {
