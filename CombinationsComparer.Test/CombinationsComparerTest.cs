@@ -34,9 +34,9 @@ namespace CombinationsComparer.Test
                 1
             );
             ApplyTest(
-                new[] { "B11", "B1" },
-                new[] { "A11", "B2" },
-                new[] { "C4", "C5", "D7", "D8", "C9" },
+                new[] { "B12", "B2" },
+                new[] { "A12", "B3" },
+                new[] { "C10", "C5", "D7", "D8", "C9" },
                 0
             );
         }
@@ -81,6 +81,45 @@ namespace CombinationsComparer.Test
                 new[] { "A12", "B10" },
                 new[] { "A11", "B5" },
                 new[] { "C4", "C5", "D3", "D2", "C9" },
+                1
+            );
+        }
+        [TestMethod]
+        public void TestFlush()
+        {
+            ApplyTest(
+                new[] { "A3", "A4" },
+                new[] { "A5", "B6" },
+                new[] { "A14", "A13", "A12", "A11", "C9" },
+                -1
+            );
+
+            ApplyTest(
+                new[] { "A3", "A4" },
+                new[] { "B10", "B6" },
+                new[] { "A14", "A13", "A12", "A11", "C9" },
+                1
+            );
+
+            //Not here - Straight Flush
+            ApplyTest(
+                new[] { "A10", "D4" },
+                new[] { "B10", "A6" },
+                new[] { "A14", "A13", "A12", "A11", "C9" },
+                1
+            );
+
+            ApplyTest(
+                new[] { "B14", "D4" },
+                new[] { "B10", "A6" },
+                new[] { "C14", "C13", "C12", "C11", "C9" },
+                0
+            );
+            //Not here - Full House
+            ApplyTest(
+                new[] { "B14", "D12" },
+                new[] { "C3", "C6" },
+                new[] { "C14", "C13", "C12", "C11", "A12" },
                 1
             );
         }
