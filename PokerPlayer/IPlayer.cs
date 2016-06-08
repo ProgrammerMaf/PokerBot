@@ -7,7 +7,7 @@ using PokerObjects;
 
 namespace PokerPlayer
 {
-    private interface IPlayer
+    public interface IPlayer
     {
         double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable);
 

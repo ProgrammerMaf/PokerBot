@@ -15,5 +15,20 @@ namespace UserPlayer
             throw new NotImplementedException();
             //TODO: Arsenij
         }
+
+        public double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable)
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetSmallBet()
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetBigBet()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
