@@ -33,7 +33,7 @@ namespace PokerObjects
     {
         public readonly Suit Suit;
         public readonly CardRank CardRank;
-        public const int MaxRank = 12;
+        public const int MaxRank = 14;
         private static readonly Suit[] Suits =  {Suit.Club, Suit.Diamond, Suit.Heart, Suit.Spade};
         private static readonly CardRank[] Ranks = {CardRank.Ace, CardRank.King, CardRank.Queen, CardRank.Jack, CardRank.Ten, CardRank.Nine, CardRank.Eight, CardRank.Seven, CardRank.Six, CardRank.Five, CardRank.Four, CardRank.Three, CardRank.Two};
 
