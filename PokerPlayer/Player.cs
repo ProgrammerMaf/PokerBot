@@ -46,15 +46,5 @@ namespace PokerPlayer
         {
             throw new NotImplementedException();
         }
-
-        public override double MakeForceBlind()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override double GetBigBlind()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

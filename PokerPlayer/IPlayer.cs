@@ -11,7 +11,9 @@ namespace PokerPlayer
     {
         double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable);
 
-        double MakeForceBlind(int count);
+        double MakeForceBlind(double count);
+
+        void AddCashe(double count);
 
     }
 }

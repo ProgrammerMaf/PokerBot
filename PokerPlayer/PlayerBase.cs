@@ -10,18 +10,43 @@ namespace PokerPlayer
     public abstract class PlayerBase : IPlayer
     {
         private List<Card> cards;
-        private int cashe;
+        private double cashe;
+        private readonly int id;
 
-        protected PlayerBase(List<Card> cards, int cashe)
+        public Func<Bet> GetBet;
+        public Func<Card[]> GetSelfCards;
+
+        protected PlayerBase(int id, double cashe)
         {
-            this.cards = cards;
+            cards = null;
             this.cashe = cashe;
+            this.id = id;
         }
 
         public abstract double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable);
 
-        public abstract double MakeForceBlind();
+        public double MakeForceBlind(double count)
+        {
+            cashe -= count;
+            return count;
+        }
 
-        public abstract double GetBigBlind();
+        public void AddCards(List<Card> cards)
+        {
+            if (cards.Count != 2)
+                throw new Exception("Полученно не верное количество карт");
+
+        }
+        public void AddCashe(double count)
+            => cashe += count;
+        
+        
+        public override int GetHashCode()
+            => id;
+        
+
+        public override bool Equals(object obj)
+            =>((PlayerBase) obj).id == id;
+        
     }
 }

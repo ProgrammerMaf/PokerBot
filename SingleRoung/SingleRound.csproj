@@ -48,6 +48,10 @@
       <Project>{92be7b76-9b30-4cfa-82c2-038e9c62d025}</Project>
       <Name>CardDeck</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CombinationsComparer\CombinationsComparer.csproj">
+      <Project>{9AA68DC1-AE1D-42DB-9AD5-EEE200E7A744}</Project>
+      <Name>CombinationsComparer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PokerObjects\PokerObjects.csproj">
       <Project>{58F0FDC4-50DD-40BE-807E-59D9F08780A7}</Project>
       <Name>PokerObjects</Name>
