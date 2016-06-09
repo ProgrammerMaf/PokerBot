@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CardDeck;
 using PokerObjects;
 using PokerPlayer;
-using CombinationsComparer;
 
 namespace SingleRoung
 {
@@ -28,6 +26,7 @@ namespace SingleRoung
         private readonly int countSmallBlind;
         private readonly int countAnte;
         public List<Card> Deck;
+        public List<Card> DeckOnTable;
 
         public SingleRound(
             List<double?> bets, List<PlayerBase> players,
@@ -35,6 +34,7 @@ namespace SingleRoung
             int dealer, Round round, 
             int countSmallBlind, int countAnte)
         {
+            
             Bets = bets;
             Players = players;
             PlayersCount = players.Count;
@@ -43,7 +43,11 @@ namespace SingleRoung
 
             this.countSmallBlind = countSmallBlind;
             this.countAnte = countAnte;
-            this.Deck = deck;
+            Deck = deck;
+            DeckOnTable = new List<Card>();
+
+            AddCardFormDeck();
+            AddCardFormDeck();
 
             pot = 0;
             if (players.Count < 2)
@@ -51,6 +55,16 @@ namespace SingleRoung
             if (dealer < 0 || dealer >= players.Count)
                 throw new Exception($"Невозможно назначить дилера с номером {dealer}.");
         }
+
+        private void AddCardFormDeck()
+        {
+            var rand = new Random(DateTime.Now.DayOfYear);
+
+            var indexCards = rand.Next(Deck.Count);
+            DeckOnTable.Add(Deck[indexCards]);
+            Deck.RemoveAt(indexCards);
+        }
+
         private void CollectBets()
         {
             throw new NotImplementedException();
@@ -78,8 +92,7 @@ namespace SingleRoung
                     }
                 }
 
-            var winer = new List<PlayerBase>();
-            winer.Add(playersWin.First());
+            var winer = new List<PlayerBase> {playersWin.First()};
             var winers = playersWin.Where(e => 
                 CombinationsComparer
                 .CombinationsComparer.CompareCombinations(winer.First().GetSelfCards(), e.GetSelfCards(), Deck.ToArray()) == 0);
