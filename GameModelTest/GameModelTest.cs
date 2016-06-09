@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PokerObjects;
 
 namespace GameModelTest
-{
+{/*
     [TestClass]
     public class GameModelTest
     {
@@ -96,5 +96,5 @@ namespace GameModelTest
             var gameResult = game.GetResult();
             //comparing result of game
         }
-    }
+    }*/
 }

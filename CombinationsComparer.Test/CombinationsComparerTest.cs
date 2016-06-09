@@ -27,12 +27,12 @@ namespace CombinationsComparer.Test
                 {6, CardRank.Six},
                 {7, CardRank.Seven},
                 {8, CardRank.Eight},
-                {10, CardRank.Nine},
-                {11, CardRank.Ten},
-                {12, CardRank.Jack},
-                {13, CardRank.Queen},
-                {14, CardRank.King},
-                {15, CardRank.Ace}
+                {9, CardRank.Nine},
+                {10, CardRank.Ten},
+                {11, CardRank.Jack},
+                {12, CardRank.Queen},
+                {13, CardRank.King},
+                {14, CardRank.Ace}
             };
             return new Card(suits[cardData[0]], ranks[int.Parse(cardData.Substring(1))]);
         }
@@ -55,9 +55,9 @@ namespace CombinationsComparer.Test
         public void TestHighVSHigh()
         {
             ApplyTest(
-                new[] { "A12", "B1" },
-                new[] { "A11", "B2" },
-                new[] { "C4", "C5", "D7", "D8", "C9" },
+                new[] { "A13", "B2" },
+                new[] { "A12", "B3" },
+                new[] { "C10", "C5", "D7", "D8", "C9" },
                 1
             );
             ApplyTest(
@@ -127,8 +127,7 @@ namespace CombinationsComparer.Test
                 new[] { "A14", "A13", "A12", "A11", "C9" },
                 1
             );
-
-            //Not here - Straight Flush
+            
             ApplyTest(
                 new[] { "A10", "D4" },
                 new[] { "B10", "A6" },
@@ -142,7 +141,7 @@ namespace CombinationsComparer.Test
                 new[] { "C14", "C13", "C12", "C11", "C9" },
                 0
             );
-            //Not here - Full House
+
             ApplyTest(
                 new[] { "B14", "D12" },
                 new[] { "C3", "C6" },

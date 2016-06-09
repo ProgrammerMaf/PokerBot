@@ -82,7 +82,7 @@ namespace CombinationsComparer
                 hand.Concat(onTable).ToArray(),
                 5,
                 cards => cards.OrderByDescending(e => e.CardRank).ToArray(),
-                cards => isStraight(cards) && isFlush(cards) && cards[0].CardRank == Card.MaxRank
+                cards => isStraight(cards) && isFlush(cards) && cards[0].CardRank == CardRank.Ace
             );
         }
         public static Card[] StraightFlush(Card[] hand, Card[] onTable)
