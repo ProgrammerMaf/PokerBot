@@ -9,14 +9,13 @@ namespace PokerPlayer
 {
     public class Player : PlayerBase
     {
-        public string Id;
         private readonly Random randomGenerator;
 
-        public Player(string id, List<Card> cards, int cashe) 
-            : base(cards, cashe)
+        public Player(int id, List<Card> cards, int cashe) 
+            : base(id, cashe)
         {
-            Id = id;
             randomGenerator = new Random(0);
+            GetSelfCards = cards.ToArray;
         }
         private bool InInterval(double from, double to, double val)
         {

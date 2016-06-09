@@ -8,7 +8,7 @@ using PokerObjects;
 
 namespace UserPlayer
 {
-    public class UserPlayer : IPlayer
+    public class UserPlayer : PlayerBase
     {
         public double? MakeBet(List<PlayerInRoundState> players, int selfNumber, Card[] hand, Card[] onTable)
         {
@@ -16,7 +16,7 @@ namespace UserPlayer
             //TODO: Arsenij
         }
 
-        public double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable)
+        public override double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable)
         {
             throw new NotImplementedException();
         }
@@ -26,9 +26,9 @@ namespace UserPlayer
             throw new NotImplementedException();
         }
 
-        public double GetBigBlind()
+
+        public UserPlayer(int id, double cashe) : base(id, cashe)
         {
-            throw new NotImplementedException();
         }
     }
 }
