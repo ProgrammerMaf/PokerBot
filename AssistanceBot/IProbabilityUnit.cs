@@ -4,7 +4,7 @@ namespace AssistanceBot
 {
     public interface IProbabilityUnit
     {
-        AssistanceInfo GetOdds(Card[] hand, Card[] onTable, int count);
+        AssistanceInfo GetOdds(Card[] hand, Card[] onTable, GameState state, double moneyToCall, string playerId);
     }
     
 }

@@ -9,6 +9,6 @@ namespace AssistanceBot
 {
     public interface IAssistanceBot
     {
-        Bet OfferBet(GameState state, double moneyToCall, Card[] hand, Card[] onTable);
+        Bet OfferBet(string playerId, GameState state, double moneyToCall, Card[] hand, Card[] onTable);
     }
 }

@@ -42,16 +42,22 @@
   <ItemGroup>
     <Compile Include="AssistanceBot.cs" />
     <Compile Include="AssistanceInfo.cs" />
+    <Compile Include="DatabaseUnit.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="IAssistanceBot.cs" />
     <Compile Include="IDatabaseUnit.cs" />
     <Compile Include="IProbabilityUnit.cs" />
+    <Compile Include="ProbabilityUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PokerObjects\PokerObjects.csproj">
       <Project>{58f0fdc4-50dd-40be-807e-59d9f08780a7}</Project>
       <Name>PokerObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SingleRoung\SingleRound.csproj">
+      <Project>{83142F56-0BB6-4EC9-B5E7-5D377A3158A8}</Project>
+      <Name>SingleRound</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

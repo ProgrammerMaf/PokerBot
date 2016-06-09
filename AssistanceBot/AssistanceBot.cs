@@ -18,13 +18,12 @@ namespace AssistanceBot
             this.databaseUnit = databaseUnit;
             this.probabilityUnit = probabilityUnit;
         }
-        public Bet OfferBet(GameState state, double moneyToCall, Card[] hand, Card[] onTable)
+        public Bet OfferBet(string playerId, GameState state, double moneyToCall, Card[] hand, Card[] onTable)
         {
             var aggressiveness = databaseUnit.GetAgressiveness(state.RemainedPlayersState);
-            var odds = probabilityUnit.GetOdds(hand, onTable, state.RemainedPlayersState.Count);
-            
-
-            return null;
+            var odds = probabilityUnit.GetOdds(hand, onTable, state, moneyToCall, playerId);
+            var clarifiedHandOdds = odds.DiscountedOdds * (1 + AggressivenessNoteCoeffitient * (1 - aggressiveness));
+            return clarifiedHandOdds <= odds.PotOdds ? new Bet(moneyToCall, playerId) : null;
         }
     }
 }
