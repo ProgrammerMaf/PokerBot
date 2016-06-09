@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssistanceBot.cs" />
+    <Compile Include="AssistanceInfo.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="IAssistanceBot.cs" />
     <Compile Include="IDatabaseUnit.cs" />

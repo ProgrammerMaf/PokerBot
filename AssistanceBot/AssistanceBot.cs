@@ -9,8 +9,9 @@ namespace AssistanceBot
 {
     public class AssistanceBot : IAssistanceBot
     {
-        private IDatabaseUnit databaseUnit;
-        private IProbabilityUnit probabilityUnit;
+        public const double AggressivenessNoteCoeffitient = 0.1;
+        private readonly IDatabaseUnit databaseUnit;
+        private readonly IProbabilityUnit probabilityUnit;
 
         public AssistanceBot(IDatabaseUnit databaseUnit, IProbabilityUnit probabilityUnit)
         {
@@ -19,10 +20,10 @@ namespace AssistanceBot
         }
         public Bet OfferBet(GameState state, double moneyToCall, Card[] hand, Card[] onTable)
         {
-            var opponentsAggressiveness = databaseUnit.GetAgressiveness(state.RemainedPlayersState);
-            var opponentsLuckiness = databaseUnit.GetLuckiness(state.RemainedPlayersState);
-            var winningProbability = probabilityUnit.GetWinProbability(hand, onTable, state.RemainedPlayersState.Count);
-            bool wantToPlay = winningProbability >= (1 - opponentsLuckiness) * opponentsAggressiveness / 2;
+            var aggressiveness = databaseUnit.GetAgressiveness(state.RemainedPlayersState);
+            var odds = probabilityUnit.GetOdds(hand, onTable, state.RemainedPlayersState.Count);
+            
+
             return null;
         }
     }

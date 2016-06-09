@@ -4,6 +4,7 @@ namespace AssistanceBot
 {
     public interface IProbabilityUnit
     {
-        double GetWinProbability(Card[] hand, Card[] onTable, int count);
+        AssistanceInfo GetOdds(Card[] hand, Card[] onTable, int count);
     }
+    
 }
