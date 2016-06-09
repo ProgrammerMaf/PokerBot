@@ -9,11 +9,15 @@ namespace CombinationsComparer.Test
     [TestClass]
     public class CombinationsComparerTest
     {
+        public Card GetCardFromStrings(string cardData)
+        {
+            return new Card(cardData[0], int.Parse(cardData.Substring(1)));
+        }
         public void ApplyTest(string[] first, string[] second, string[] table, int expectedResult)
         {
-            var firstCards = first.Select(e => new Card(e[0], int.Parse(e.Substring(1)))).ToArray();
-            var secondCards = second.Select(e => new Card(e[0], int.Parse(e.Substring(1)))).ToArray();
-            var onTable = table.Select(e => new Card(e[0], int.Parse(e.Substring(1)))).ToArray();
+            var firstCards = first.Select(GetCardFromStrings).ToArray();
+            var secondCards = second.Select(GetCardFromStrings).ToArray();
+            var onTable = table.Select(GetCardFromStrings).ToArray();
             var actualResult = CombinationsComparer.CompareCombinations(firstCards, secondCards, onTable);
             if (expectedResult == 0)
             {

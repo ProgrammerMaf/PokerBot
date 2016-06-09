@@ -19,7 +19,7 @@ namespace CombinationsComparer
             return selectRequiredCards
                 .Concat(
                     selectOtherCards
-                        .OrderByDescending(e => e.Rank)
+                        .OrderByDescending(e => e.CardRank)
                         .Take(unselectedCount)
                 )
                 .ToArray();
@@ -62,7 +62,7 @@ namespace CombinationsComparer
         {
             for (int i = 1; i < 5; i++)
             {
-                if (cards[i].Rank != cards[i - 1].Rank - 1)
+                if (cards[i].CardRank != cards[i - 1].CardRank - 1)
                     return false;
             }
             return true;
@@ -81,8 +81,8 @@ namespace CombinationsComparer
             return IsCorrectCombination(
                 hand.Concat(onTable).ToArray(),
                 5,
-                cards => cards.OrderByDescending(e => e.Rank).ToArray(),
-                cards => isStraight(cards) && isFlush(cards) && cards[0].Rank == Card.MaxRank
+                cards => cards.OrderByDescending(e => e.CardRank).ToArray(),
+                cards => isStraight(cards) && isFlush(cards) && cards[0].CardRank == Card.MaxRank
             );
         }
         public static Card[] StraightFlush(Card[] hand, Card[] onTable)
@@ -90,7 +90,7 @@ namespace CombinationsComparer
             return IsCorrectCombination(
                 hand.Concat(onTable).ToArray(),
                 5,
-                cards => cards.OrderByDescending(e => e.Rank).ToArray(),
+                cards => cards.OrderByDescending(e => e.CardRank).ToArray(),
                 cards => isStraight(cards) && isFlush(cards)
             );
         }
@@ -99,26 +99,26 @@ namespace CombinationsComparer
             return IsCorrectCombination(
                 hand.Concat(onTable).ToArray(),
                 4,
-                cards => cards.OrderByDescending(e => e.Rank).ToArray(),
-                cards => cards[0].Rank == cards[1].Rank && 
-                         cards[1].Rank == cards[2].Rank &&
-                         cards[2].Rank == cards[3].Rank
+                cards => cards.OrderByDescending(e => e.CardRank).ToArray(),
+                cards => cards[0].CardRank == cards[1].CardRank && 
+                         cards[1].CardRank == cards[2].CardRank &&
+                         cards[2].CardRank == cards[3].CardRank
             );
         }
         public static Card[] FullHouse(Card[] hand, Card[] onTable)
         {
-            var sortedCards = hand.Concat(onTable).OrderByDescending(e => e.Rank).ToArray();
+            var sortedCards = hand.Concat(onTable).OrderByDescending(e => e.CardRank).ToArray();
             foreach (var indices in IntCombinations(7, 5))
             {
                 var choisenCards = indices.Select(index => sortedCards[index]).ToArray();
-                if (choisenCards[0].Rank == choisenCards[1].Rank &&
-                    choisenCards[1].Rank == choisenCards[2].Rank &&
-                    choisenCards[3].Rank == choisenCards[4].Rank
+                if (choisenCards[0].CardRank == choisenCards[1].CardRank &&
+                    choisenCards[1].CardRank == choisenCards[2].CardRank &&
+                    choisenCards[3].CardRank == choisenCards[4].CardRank
                     )
                     return SelectCards(sortedCards, indices);
-                if (choisenCards[0].Rank == choisenCards[1].Rank &&
-                    choisenCards[2].Rank == choisenCards[3].Rank &&
-                    choisenCards[3].Rank == choisenCards[4].Rank
+                if (choisenCards[0].CardRank == choisenCards[1].CardRank &&
+                    choisenCards[2].CardRank == choisenCards[3].CardRank &&
+                    choisenCards[3].CardRank == choisenCards[4].CardRank
                     )
                     return SelectCards(sortedCards, indices[2], indices[3], indices[4], indices[0], indices[1]);
             }
@@ -129,7 +129,7 @@ namespace CombinationsComparer
             return IsCorrectCombination(
                 hand.Concat(onTable).ToArray(),
                 5,
-                cards => cards.OrderByDescending(e => e.Rank).ToArray(),
+                cards => cards.OrderByDescending(e => e.CardRank).ToArray(),
                 cards => isFlush(cards)
             );
         }
@@ -138,7 +138,7 @@ namespace CombinationsComparer
             return IsCorrectCombination(
                 hand.Concat(onTable).ToArray(),
                 5,
-                cards => cards.OrderByDescending(e => e.Rank).ToArray(),
+                cards => cards.OrderByDescending(e => e.CardRank).ToArray(),
                 cards => isStraight(cards)
             );
         }
@@ -147,8 +147,8 @@ namespace CombinationsComparer
             return IsCorrectCombination(
                 hand.Concat(onTable).ToArray(),
                 3,
-                cards => cards.OrderByDescending(e => e.Rank).ToArray(),
-                cards => cards[0].Rank == cards[1].Rank && cards[1].Rank == cards[2].Rank
+                cards => cards.OrderByDescending(e => e.CardRank).ToArray(),
+                cards => cards[0].CardRank == cards[1].CardRank && cards[1].CardRank == cards[2].CardRank
             );
         }
         public static Card[] TwoPairs(Card[] hand, Card[] onTable)
@@ -156,8 +156,8 @@ namespace CombinationsComparer
             return IsCorrectCombination(
                 hand.Concat(onTable).ToArray(),
                 4,
-                cards => cards.OrderByDescending(e => e.Rank).ToArray(),
-                cards => cards[0].Rank == cards[1].Rank && cards[2].Rank == cards[3].Rank
+                cards => cards.OrderByDescending(e => e.CardRank).ToArray(),
+                cards => cards[0].CardRank == cards[1].CardRank && cards[2].CardRank == cards[3].CardRank
             );
         }
         public static Card[] Pair(Card[] hand, Card[] onTable)
@@ -165,13 +165,13 @@ namespace CombinationsComparer
             return IsCorrectCombination(
                 hand.Concat(onTable).ToArray(),
                 2,
-                cards => cards.OrderByDescending(e => e.Rank).ToArray(),
-                cards => cards[0].Rank == cards[1].Rank
+                cards => cards.OrderByDescending(e => e.CardRank).ToArray(),
+                cards => cards[0].CardRank == cards[1].CardRank
             );
         }
         public static Card[] HighCard(Card[] hand, Card[] onTable)
         {
-            return hand.Concat(onTable).OrderByDescending(e => e.Rank).Take(5).ToArray();
+            return hand.Concat(onTable).OrderByDescending(e => e.CardRank).Take(5).ToArray();
         }
 
     }
@@ -198,8 +198,8 @@ namespace CombinationsComparer
         {
             for (int i = 0; i < 5; i++)
             {
-                if (first[i].Rank != second[i].Rank)
-                    return first[i].Rank - second[i].Rank;
+                if (first[i].CardRank != second[i].CardRank)
+                    return first[i].CardRank - second[i].CardRank;
             }
             return 0;
         }

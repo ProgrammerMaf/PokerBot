@@ -14,8 +14,8 @@ namespace ConsoleClient
         static void Main(string[] args)
         {
             var id = 0;
-            var firstPlayer = new Player(++id, new List<Card>{ new Card('A', 14), new Card('B', 14) }, 300);
-            var secondPlayer = new Player(++id, new List<Card> { new Card('C', 14), new Card('D', 14) }, 200);
+            var firstPlayer = new Player(++id, new List<Card>{ new Card(Suit.Club, CardRank.Ace), new Card(Suit.Diamond, CardRank.Ace) }, 300);
+            var secondPlayer = new Player(++id, new List<Card> { new Card(Suit.Spade, CardRank.Ace), new Card(Suit.Heart, CardRank.Ace) }, 200);
 
             firstPlayer.GetBet = (_, __, ___, ____) =>
             {
