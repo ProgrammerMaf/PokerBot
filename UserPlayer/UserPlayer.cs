@@ -10,11 +10,6 @@ namespace UserPlayer
 {
     public class UserPlayer : PlayerBase
     {
-        public double? MakeBet(List<PlayerInRoundState> players, int selfNumber, Card[] hand, Card[] onTable)
-        {
-            throw new NotImplementedException();
-            //TODO: Arsenij
-        }
 
         public override double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable)
         {

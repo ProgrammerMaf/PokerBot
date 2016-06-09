@@ -16,6 +16,7 @@ namespace PokerPlayer
         {
             randomGenerator = new Random(0);
             GetSelfCards = cards.ToArray;
+            GetBet = MakeBet;
         }
         private bool InInterval(double from, double to, double val)
         {
@@ -43,7 +44,7 @@ namespace PokerPlayer
 
         public override double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable)
         {
-            throw new NotImplementedException();
+            return 2;
         }
     }
 }
