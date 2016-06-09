@@ -27,7 +27,7 @@ namespace SingleRoung
 
         private readonly int countSmallBlind;
         private readonly int countAnte;
-        private List<Card> deck;
+        public List<Card> Deck;
 
         public SingleRound(
             List<double?> bets, List<PlayerBase> players,
@@ -43,7 +43,7 @@ namespace SingleRoung
 
             this.countSmallBlind = countSmallBlind;
             this.countAnte = countAnte;
-            this.deck = deck;
+            this.Deck = deck;
 
             pot = 0;
             if (players.Count < 2)
@@ -70,7 +70,7 @@ namespace SingleRoung
                 for (var j = 0; j < playersWin.Length; j++)
                 {
                     if (CombinationsComparer.CombinationsComparer.CompareCombinations(
-                        Players[i].GetSelfCards(), Players[j].GetSelfCards(), deck.ToArray()) < 0)
+                        Players[i].GetSelfCards(), Players[j].GetSelfCards(), Deck.ToArray()) < 0)
                     {
                         var t = Players[i];
                         Players[i] = Players[j];
@@ -82,13 +82,13 @@ namespace SingleRoung
             winer.Add(playersWin.First());
             var winers = playersWin.Where(e => 
                 CombinationsComparer
-                .CombinationsComparer.CompareCombinations(winer.First().GetSelfCards(), e.GetSelfCards(), deck.ToArray()) == 0);
+                .CombinationsComparer.CompareCombinations(winer.First().GetSelfCards(), e.GetSelfCards(), Deck.ToArray()) == 0);
             foreach (var playerWin in winers)
                 playerWin.AddCashe(pot/winers.Count());
             
         }
 
-        public SingleRound PlayRound(ICardDeck deck)
+        public SingleRound PlayRound()
         {
             if (Round == Round.Preflop)
             {
@@ -102,7 +102,7 @@ namespace SingleRoung
                     for(var i = 3; i < PlayersCount - 2; i++)
                         Bets.Add(
                             Players.GetShift(Dealer + i)
-                            .MakeBet(
+                            .GetBet(
                                 Bets.Sum(e => e ?? 0), 
                                 PlayersCount, 
                                 Bets.Max(e => e ?? 0), 
@@ -149,7 +149,7 @@ namespace SingleRoung
                 for (var i = 1; i <= PlayersCount; i++)
                 {
                     var bet = Players.GetShift(Dealer + i)
-                        .MakeBet(
+                        .GetBet(
                             Bets.Sum(e => e ?? 0), PlayersCount, (double) maxBets, null);
 
                     if (bet == null)

@@ -13,7 +13,7 @@ namespace PokerPlayer
         private double cashe;
         private readonly int id;
 
-        public Func<Bet> GetBet;
+        public Func<double, int, double, Card[], double?> GetBet;
         public Func<Card[]> GetSelfCards;
 
         protected PlayerBase(int id, double cashe)
