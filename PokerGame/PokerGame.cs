@@ -8,5 +8,9 @@ namespace PokerGame
 {
     public class PokerGame
     {
+        public static void Main()
+        {
+            
+        }
     }
 }

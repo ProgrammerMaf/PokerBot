@@ -19,18 +19,45 @@ namespace SingleRoung
         public List<double?> Bets;
         public List<PlayerBase> Players;
         public int PlayersCount;
-        public int Dealer;
-        public Round Round;
-        public double pot;
+        public readonly int Dealer;
+        public readonly Round Round;
+        public double Pot;
 
         private readonly int countSmallBlind;
         private readonly int countAnte;
         public List<Card> Deck;
         public List<Card> DeckOnTable;
 
+
+        public SingleRound(
+            List<PlayerBase> players,
+            List<Card> deck,
+            int countSmallBlind, int countAnte)
+        {
+
+            Bets = new List<double?>();
+            Players = players;
+            PlayersCount = players.Count;
+            Dealer = 0;
+            Round = Round.Preflop;
+
+            this.countSmallBlind = countSmallBlind;
+            this.countAnte = countAnte;
+            Deck = deck;
+            DeckOnTable = new List<Card>();
+
+            AddCardFormDeck();
+            AddCardFormDeck();
+
+            Pot = 0;
+            if (players.Count < 2)
+                throw new Exception("Не достаточное количество игроков.");
+        }
+
         public SingleRound(
             List<double?> bets, List<PlayerBase> players,
             List<Card> deck,
+            List<Card> deckOnTable, 
             int dealer, Round round, 
             int countSmallBlind, int countAnte)
         {
@@ -44,12 +71,9 @@ namespace SingleRoung
             this.countSmallBlind = countSmallBlind;
             this.countAnte = countAnte;
             Deck = deck;
-            DeckOnTable = new List<Card>();
+            DeckOnTable = deckOnTable;
 
-            AddCardFormDeck();
-            AddCardFormDeck();
-
-            pot = 0;
+            Pot = 0;
             if (players.Count < 2)
                 throw new Exception("Не достаточное количество игроков.");
             if (dealer < 0 || dealer >= players.Count)
@@ -97,7 +121,7 @@ namespace SingleRoung
                 CombinationsComparer
                 .CombinationsComparer.CompareCombinations(winer.First().GetSelfCards(), e.GetSelfCards(), Deck.ToArray()) == 0);
             foreach (var playerWin in winers)
-                playerWin.AddCashe(pot/winers.Count());
+                playerWin.AddCashe(Pot/winers.Count());
             
         }
 
@@ -110,39 +134,34 @@ namespace SingleRoung
                 
                 Bets.Add(Players.GetShift(Dealer + 1).MakeForceBlind(countSmallBlind));
                 Bets.Add(Players.GetShift(Dealer + 2).MakeForceBlind(countSmallBlind*2));
-                if (PlayersCount > 2)
-                {
-                    for(var i = 3; i < PlayersCount - 2; i++)
-                        Bets.Add(
-                            Players.GetShift(Dealer + i)
-                            .GetBet(
-                                Bets.Sum(e => e ?? 0), 
-                                PlayersCount, 
-                                Bets.Max(e => e ?? 0), 
-                                null));
-                }
-                pot += Bets.Select(e => e ?? 0).Sum();
-                Bets = new List<double?>();
-
-                Round = Round.Flop;
+                MakeBets(2);
+                return 
+                    new SingleRound(new List<double?>(), 
+                        Players, Deck, DeckOnTable, Dealer + 1, Round.Flop, countSmallBlind, countAnte );
             }
 
-            if (Round == Round.Flop)
+            if (Round != Round.Preflop)
             {
                 MakeBets();
-                Round = Round.Turn;
+                return
+                    new SingleRound(new List<double?>(),
+                        Players, Deck, DeckOnTable, Dealer + 1, Round.Turn, countSmallBlind, countAnte);
             }
 
             if (Round == Round.Turn)
             {
                 MakeBets();
-                Round = Round.River;
+                return
+                    new SingleRound(new List<double?>(),
+                        Players, Deck, DeckOnTable, Dealer + 1, Round.River, countSmallBlind, countAnte);
             }
 
             if (Round == Round.River)
             {
                 MakeBets();
-                Round = Round.Finish;
+                return
+                    new SingleRound(new List<double?>(),
+                        Players, Deck, DeckOnTable, Dealer + 1, Round.Finish, countSmallBlind, countAnte);
             }
 
             if (Round == Round.Finish)
@@ -151,7 +170,7 @@ namespace SingleRoung
             return this;
         }
 
-        private void MakeBets()
+        private void MakeBets(int shift = 0)
         {
             var betsRound = new List<double?>();
             double? maxBets = 0;
@@ -159,7 +178,7 @@ namespace SingleRoung
             do
             {
                 isReapeat = false;
-                for (var i = 1; i <= PlayersCount; i++)
+                for (var i = shift + 1; i <= PlayersCount; i++)
                 {
                     var bet = Players.GetShift(Dealer + i)
                         .GetBet(
@@ -181,7 +200,7 @@ namespace SingleRoung
                 }
             } while (isReapeat); 
 
-            pot += Bets.Select(e => e ?? 0).Sum();
+            Pot += Bets.Select(e => e ?? 0).Sum();
             Bets = new List<double?>();
         }
     }

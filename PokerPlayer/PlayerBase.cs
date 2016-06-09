@@ -10,7 +10,7 @@ namespace PokerPlayer
     public abstract class PlayerBase : IPlayer
     {
         private List<Card> cards;
-        private double cashe;
+        protected double cashe;
         private readonly int id;
 
         public Func<double, int, double, Card[], double?> GetBet;
@@ -35,6 +35,7 @@ namespace PokerPlayer
         {
             if (cards.Count != 2)
                 throw new Exception("Полученно не верное количество карт");
+            this.cards = cards;
 
         }
         public void AddCashe(double count)

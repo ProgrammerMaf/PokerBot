@@ -62,6 +62,10 @@
       <Project>{83142F56-0BB6-4EC9-B5E7-5D377A3158A8}</Project>
       <Name>SingleRound</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UserPlayer\UserPlayer.csproj">
+      <Project>{026E6997-7A5E-46A7-B42C-AFB15F5D86E0}</Project>
+      <Name>UserPlayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

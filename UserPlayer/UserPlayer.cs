@@ -18,17 +18,28 @@ namespace UserPlayer
 
         public override double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Ваш ход:");
+            Console.WriteLine($"Игроков за столом: {playersOnTable}");
+            Console.WriteLine($"Денег в банке: {cash}");
+            Console.Write($"Карты на столе: ");
+            foreach (var card in onTable)
+                Console.Write($"{card} ");
+            Console.WriteLine();
+
+            Console.WriteLine("Введите вашу ставку (n - для паса): ");
+            var bet = Console.ReadLine();
+            if (bet == "n")
+                return null;
+            var betC = double.Parse(bet);
+            cashe -= betC;
+            return betC;
         }
 
-        public double MakeForceBlind()
+        public UserPlayer(int id, double cashe) 
+            : base(id, cashe)
         {
-            throw new NotImplementedException();
-        }
-
-
-        public UserPlayer(int id, double cashe) : base(id, cashe)
-        {
+            Console.WriteLine("Игрок создан.");
+            GetBet = MakeBet;
         }
     }
 }

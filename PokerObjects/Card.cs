@@ -47,5 +47,10 @@ namespace PokerObjects
             Suit = suit;
             CardRank = cardRank;
         }
+
+        public override int GetHashCode()
+        {
+            return Suit.GetHashCode() * 17 + CardRank.GetHashCode();
+        }
     }
 }
