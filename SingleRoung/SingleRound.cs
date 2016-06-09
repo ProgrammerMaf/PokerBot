@@ -14,7 +14,8 @@ namespace SingleRoung
         Preflop,
         Flop,
         Turn,
-        River
+        River,
+        Finish
     }
     public class SingleRound
     {
@@ -23,35 +24,52 @@ namespace SingleRoung
         public int PlayersCount;
         public int Dealer;
         public Round Round;
+        public double pot;
 
-        private int whoNext;
+        private readonly int countSmallBlind;
+        private readonly int countAnte;
 
-        public SingleRound(List<double?> bets, List<IPlayer> players, int playersCount, int dealer, Round round)
+        public SingleRound(List<double?> bets, List<IPlayer> players, int dealer, Round round, 
+            int countSmallBlind, int countAnte)
         {
             Bets = bets;
             Players = players;
-            PlayersCount = playersCount;
+            PlayersCount = players.Count;
             Dealer = dealer;
             Round = round;
+
+            this.countSmallBlind = countSmallBlind;
+            this.countAnte = countAnte;
+
+            pot = 0;
+            if (players.Count < 2)
+                throw new Exception("Не достаточное количество игроков.");
+            if (dealer < 0 || dealer >= players.Count)
+                throw new Exception($"Невозможно назначить дилера с номером {dealer}.");
         }
         private void CollectBets()
         {
             throw new NotImplementedException();
         }
+
         private void AddCards(int cardsCount)
         {
 
         }
         private void SelectWinners()
         {
-
+            if (Round != Round.Finish)
+                throw new Exception("Попытка определить победителя, когда игра еще не была закончена.");
         }
         public SingleRound PlayRound(ICardDeck deck)
         {
             if (Round == Round.Preflop)
             {
-                Bets.Add(Players.GetShift(Dealer + 1).GetSmallBet());
-                Bets.Add(Players.GetShift(Dealer + 2).GetBigBet());
+                foreach (var player in Players)
+                    Bets.Add(player.MakeForceBlind(countAnte));
+                
+                Bets.Add(Players.GetShift(Dealer + 1).MakeForceBlind(countSmallBlind));
+                Bets.Add(Players.GetShift(Dealer + 2).MakeForceBlind(countSmallBlind*2));
                 if (PlayersCount > 2)
                 {
                     for(var i = 3; i < PlayersCount - 2; i++)
@@ -63,6 +81,10 @@ namespace SingleRoung
                                 Bets.Max(e => e ?? 0), 
                                 null));
                 }
+                pot += Bets.Select(e => e ?? 0).Sum();
+                Bets = new List<double?>();
+
+
                 Round = Round.Flop;
             }
             if (Round == Round.Flop)
@@ -75,6 +97,9 @@ namespace SingleRoung
                     Bets.Add(bet);
                     betsRound.Add(bet);
                 }
+
+                pot += Bets.Select(e => e ?? 0).Sum();
+                Bets = new List<double?>();
 
                 Round = Round.Turn;
             }
@@ -90,6 +115,9 @@ namespace SingleRoung
                     betsRound.Add(bet);
                 }
 
+                pot += Bets.Select(e => e ?? 0).Sum();
+                Bets = new List<double?>();
+
                 Round = Round.River;
             }
 
@@ -104,7 +132,16 @@ namespace SingleRoung
                     Bets.Add(bet);
                     betsRound.Add(bet);
                 }
+
+                pot += Bets.Select(e => e ?? 0).Sum();
+                Bets = new List<double?>();
+
+                Round = Round.Finish;
             }
+
+            if (Round == Round.Finish)
+                throw new Exception("Попытка сыграть раунд, когда игра была закончена.");
+ 
             return this;
         }
     }
@@ -115,12 +152,12 @@ namespace SingleRoung
         {
             var count = list.Count();
             if (index > count)
-        {
+            {
                 var newIndex = index - (index/count)*count;
                 return list.ElementAt(newIndex);
             }
             return list.ElementAt(index);
         }
     }
-        
+
 }

@@ -21,12 +21,12 @@ namespace UserPlayer
             throw new NotImplementedException();
         }
 
-        public double GetSmallBet()
+        public double MakeForceBlind()
         {
             throw new NotImplementedException();
         }
 
-        public double GetBigBet()
+        public double GetBigBlind()
         {
             throw new NotImplementedException();
         }

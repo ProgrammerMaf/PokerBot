@@ -20,8 +20,8 @@ namespace PokerPlayer
 
         public abstract double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable);
 
-        public abstract double GetSmallBet();
+        public abstract double MakeForceBlind();
 
-        public abstract double GetBigBet();
+        public abstract double GetBigBlind();
     }
 }
