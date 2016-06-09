@@ -11,7 +11,30 @@ namespace CombinationsComparer.Test
     {
         public Card GetCardFromStrings(string cardData)
         {
-            return new Card(cardData[0], int.Parse(cardData.Substring(1)));
+            var suits = new Dictionary<char, Suit>
+            {
+                {'A', Suit.Spade},
+                {'B', Suit.Club},
+                {'C', Suit.Diamond},
+                {'D', Suit.Heart}
+            };
+            var ranks = new Dictionary<int, CardRank>()
+            {
+                {2, CardRank.Two},
+                {3, CardRank.Three},
+                {4, CardRank.Four},
+                {5, CardRank.Five},
+                {6, CardRank.Six},
+                {7, CardRank.Seven},
+                {8, CardRank.Eight},
+                {10, CardRank.Nine},
+                {11, CardRank.Ten},
+                {12, CardRank.Jack},
+                {13, CardRank.Queen},
+                {14, CardRank.King},
+                {15, CardRank.Ace}
+            };
+            return new Card(suits[cardData[0]], ranks[int.Parse(cardData.Substring(1))]);
         }
         public void ApplyTest(string[] first, string[] second, string[] table, int expectedResult)
         {
