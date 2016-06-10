@@ -11,11 +11,10 @@ namespace PokerPlayer
     {
         private readonly Random randomGenerator;
 
-        public Player(int id, List<Card> cards, int cashe) 
+        public Player(int id, double cashe) 
             : base(id, cashe)
         {
             randomGenerator = new Random(0);
-            GetSelfCards = cards.ToArray;
             GetBet = MakeBet;
         }
         private bool InInterval(double from, double to, double val)

@@ -48,6 +48,16 @@ namespace PokerObjects
             CardRank = cardRank;
         }
 
+        public override string ToString()
+        {
+            string suitChar = null;
+            if (Suit == Suit.Heart) suitChar = "♥";
+            if (Suit == Suit.Diamond) suitChar = "♦";
+            if (Suit == Suit.Club) suitChar = "♣";
+            if (Suit == Suit.Spade) suitChar = "♠";
+            return $"{CardRank}{suitChar}" ;
+        }
+
         public override int GetHashCode()
         {
             return Suit.GetHashCode() * 17 + CardRank.GetHashCode();

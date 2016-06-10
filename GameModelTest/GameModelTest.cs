@@ -96,5 +96,5 @@ namespace GameModelTest
             var gameResult = game.GetResult();
             //comparing result of game
         }
-    }*/
+    }*
 }

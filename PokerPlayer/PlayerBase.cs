@@ -9,7 +9,6 @@ namespace PokerPlayer
 {
     public abstract class PlayerBase : IPlayer
     {
-        private List<Card> cards;
         protected double cashe;
         private readonly int id;
 
@@ -18,7 +17,6 @@ namespace PokerPlayer
 
         protected PlayerBase(int id, double cashe)
         {
-            cards = null;
             this.cashe = cashe;
             this.id = id;
         }
@@ -35,7 +33,7 @@ namespace PokerPlayer
         {
             if (cards.Count != 2)
                 throw new Exception("Полученно не верное количество карт");
-            this.cards = cards;
+            GetSelfCards = cards.ToArray;
 
         }
         public void AddCashe(double count)
@@ -48,6 +46,8 @@ namespace PokerPlayer
 
         public override bool Equals(object obj)
             =>((PlayerBase) obj).id == id;
-        
+
+        public override string ToString()
+            => id.ToString();
     }
 }

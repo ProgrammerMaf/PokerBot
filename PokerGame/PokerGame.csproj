@@ -62,9 +62,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PokerObjects\PokerObjects.csproj">
+      <Project>{58F0FDC4-50DD-40BE-807E-59D9F08780A7}</Project>
+      <Name>PokerObjects</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PokerPlayer\PokerPlayer.csproj">
       <Project>{C8290E4F-71A9-4237-8096-61B687556913}</Project>
       <Name>PokerPlayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SingleRoung\SingleRound.csproj">
+      <Project>{83142F56-0BB6-4EC9-B5E7-5D377A3158A8}</Project>
+      <Name>SingleRound</Name>
     </ProjectReference>
     <ProjectReference Include="..\UserPlayer\UserPlayer.csproj">
       <Project>{026E6997-7A5E-46A7-B42C-AFB15F5D86E0}</Project>

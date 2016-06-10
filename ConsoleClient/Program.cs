@@ -20,21 +20,13 @@ namespace ConsoleClient
 
             var indexCards = rand.Next(cards.Count());
             
-            var fCards = new List<Card>();
-            var sCards = new List<Card>();
-            for (int i = 0; i < 2; i++)
-            {
-                fCards.Add(cards.GetAndRemove(rand.Next(cards.Count)));
-                sCards.Add(cards.GetAndRemove(rand.Next(cards.Count)));
-            }
+
 
             var id = 0;
             var firstPlayer = new UserPlayer.UserPlayer(++id, 300);
-            firstPlayer.AddCards(fCards);
 
-            var secondPlayer = new Player(++id, sCards, 200);
+            var secondPlayer = new Player(++id, 200) {GetBet = (_, __, ___, ____) => 10};
 
-            secondPlayer.GetBet = (_, __, ___, ____) => 10;
 
             var game = 
                 new SingleRound(new List<PlayerBase> { firstPlayer, secondPlayer}, cards, 2, 2);
@@ -43,11 +35,19 @@ namespace ConsoleClient
             {
                 Console.WriteLine($"банк: {game.Pot}");
                 Console.WriteLine("Карты на столе: ");
-                foreach (var card in game.Deck)
+                foreach (var card in game.DeckOnTable)
                     Console.Write($"{card} ");
                 Console.WriteLine(".");
-                game.PlayRound();
+                game = game.PlayRound();
             }
+
+            Console.WriteLine("Выиграли: ");
+            foreach (var winner in game.SelectWinners())
+            {
+                Console.WriteLine(winner);
+            }
+
+            Console.ReadLine();
         }
     }
 

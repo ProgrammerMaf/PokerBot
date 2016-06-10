@@ -46,8 +46,9 @@ namespace SingleRoung
             Deck = deck;
             DeckOnTable = new List<Card>();
 
-            AddCardFormDeck();
-            AddCardFormDeck();
+            foreach (var player in Players)
+                AddCardsPlayer(player);
+           
 
             Pot = 0;
             if (players.Count < 2)
@@ -58,6 +59,7 @@ namespace SingleRoung
             List<double?> bets, List<PlayerBase> players,
             List<Card> deck,
             List<Card> deckOnTable, 
+            double pot,
             int dealer, Round round, 
             int countSmallBlind, int countAnte)
         {
@@ -73,33 +75,31 @@ namespace SingleRoung
             Deck = deck;
             DeckOnTable = deckOnTable;
 
-            Pot = 0;
-            if (players.Count < 2)
+            Pot = pot;
+            if (players.Count < 2 && round != Round.Finish)
                 throw new Exception("Не достаточное количество игроков.");
-            if (dealer < 0 || dealer >= players.Count)
-                throw new Exception($"Невозможно назначить дилера с номером {dealer}.");
         }
 
-        private void AddCardFormDeck()
+        private Card GetCardFormDeck()
         {
             var rand = new Random(DateTime.Now.DayOfYear);
 
             var indexCards = rand.Next(Deck.Count);
-            DeckOnTable.Add(Deck[indexCards]);
+            var card = Deck[indexCards];
             Deck.RemoveAt(indexCards);
+
+            return card;
         }
 
-        private void CollectBets()
+        private void AddCardsPlayer(PlayerBase player)
         {
-            throw new NotImplementedException();
+            var cards = new List<Card>();
+            for (int i = 0; i < 2; i++)
+                cards.Add(GetCardFormDeck());
+            player.GetSelfCards = () => cards.ToArray();
+
         }
-
-        private void AddCards(int cardsCount)
-        {
-
-        }
-
-        private void SelectWinners()
+        public IEnumerable<PlayerBase> SelectWinners()
         {
             if (Round != Round.Finish)
                 throw new Exception("Попытка определить победителя, когда игра еще не была закончена.");
@@ -122,11 +122,17 @@ namespace SingleRoung
                 .CombinationsComparer.CompareCombinations(winer.First().GetSelfCards(), e.GetSelfCards(), Deck.ToArray()) == 0);
             foreach (var playerWin in winers)
                 playerWin.AddCashe(Pot/winers.Count());
-            
+
+            return playersWin;
+
         }
 
         public SingleRound PlayRound()
         {
+            if (Round == Round.Finish)
+                throw new Exception("Попытка сыграть раунд, когда игра была закончена.");
+
+            Round nRound = Round.Finish;
             if (Round == Round.Preflop)
             {
                 foreach (var player in Players)
@@ -135,39 +141,40 @@ namespace SingleRoung
                 Bets.Add(Players.GetShift(Dealer + 1).MakeForceBlind(countSmallBlind));
                 Bets.Add(Players.GetShift(Dealer + 2).MakeForceBlind(countSmallBlind*2));
                 MakeBets(2);
+
+                DeckOnTable.Add(GetCardFormDeck());
+                DeckOnTable.Add(GetCardFormDeck());
                 return 
                     new SingleRound(new List<double?>(), 
-                        Players, Deck, DeckOnTable, Dealer + 1, Round.Flop, countSmallBlind, countAnte );
+                        Players, Deck, DeckOnTable, Pot, Dealer + 1, Round.Flop, countSmallBlind, countAnte);
             }
 
-            if (Round != Round.Preflop)
+            if (Round == Round.Flop)
             {
-                MakeBets();
-                return
-                    new SingleRound(new List<double?>(),
-                        Players, Deck, DeckOnTable, Dealer + 1, Round.Turn, countSmallBlind, countAnte);
+                DeckOnTable.Add(GetCardFormDeck());
+                nRound = Round.Turn;
             }
+
 
             if (Round == Round.Turn)
             {
-                MakeBets();
-                return
-                    new SingleRound(new List<double?>(),
-                        Players, Deck, DeckOnTable, Dealer + 1, Round.River, countSmallBlind, countAnte);
+                DeckOnTable.Add(GetCardFormDeck());
+                nRound = Round.River;
             }
+
 
             if (Round == Round.River)
-            {
-                MakeBets();
-                return
-                    new SingleRound(new List<double?>(),
-                        Players, Deck, DeckOnTable, Dealer + 1, Round.Finish, countSmallBlind, countAnte);
-            }
+                nRound = Round.Finish;
 
-            if (Round == Round.Finish)
-                throw new Exception("Попытка сыграть раунд, когда игра была закончена.");
- 
-            return this;
+            MakeBets();
+            GetCardFormDeck();
+
+            if (Players.Count <= 1)
+                nRound = Round.Finish;
+
+            return
+                new SingleRound(new List<double?>(),
+                    Players, Deck, DeckOnTable, Pot, Dealer + 1, nRound, countSmallBlind, countAnte);
         }
 
         private void MakeBets(int shift = 0)
@@ -182,7 +189,7 @@ namespace SingleRoung
                 {
                     var bet = Players.GetShift(Dealer + i)
                         .GetBet(
-                            Bets.Sum(e => e ?? 0), PlayersCount, (double) maxBets, null);
+                            Pot, PlayersCount, (double) maxBets, DeckOnTable.ToArray());
 
                     if (bet == null)
                     {
@@ -210,7 +217,7 @@ namespace SingleRoung
         public static T GetShift<T>(this IEnumerable<T> list, int index)
         {
             var count = list.Count();
-            if (index > count)
+            if (index >= count)
             {
                 var newIndex = index - (index/count)*count;
                 return list.ElementAt(newIndex);
