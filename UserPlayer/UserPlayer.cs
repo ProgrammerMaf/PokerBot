@@ -11,7 +11,7 @@ namespace UserPlayer
     public class UserPlayer : PlayerBase
     {
 
-        public override double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable)
+        public override Bet MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable)
         {
             Console.WriteLine();
             Console.WriteLine("Ваш ход:");
@@ -31,10 +31,10 @@ namespace UserPlayer
                 return null;
             var betC = double.Parse(bet);
             cashe -= betC;
-            return betC;
+            return new Bet(betC, id);
         }
 
-        public UserPlayer(int id, double cashe) 
+        public UserPlayer(string id, double cashe) 
             : base(id, cashe)
         {
             Console.WriteLine("Игрок создан.");

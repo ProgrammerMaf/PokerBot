@@ -13,12 +13,12 @@ namespace AssistanceBot
         private AssistanceInfo GetOddsOnPreflop(Card[] hand, Card[] onTable, GameState state, double moneyToCall,
             string playerId)
         {
-            throw new NotImplementedException();
+            return new AssistanceInfo(5.1, 4.2, 4);
         }
         private AssistanceInfo GetOddsForOneCard(Card[] hand, Card[] onTable, GameState state, double moneyToCall,
             string playerId)
         {
-            throw new NotImplementedException();
+            return new AssistanceInfo(5.1, 4.2, 4);
         }
         public AssistanceInfo GetOdds(Card[] hand, Card[] onTable, GameState state, double moneyToCall, string playerId)
         {

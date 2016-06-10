@@ -40,12 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssistanceBot.cs" />
+    <Compile Include="Assistant.cs" />
     <Compile Include="AssistanceInfo.cs" />
-    <Compile Include="DatabaseUnit.cs" />
     <Compile Include="GameState.cs" />
-    <Compile Include="IAssistanceBot.cs" />
-    <Compile Include="IDatabaseUnit.cs" />
+    <Compile Include="IAssistant.cs" />
     <Compile Include="IProbabilityUnit.cs" />
     <Compile Include="ProbabilityUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -10,23 +10,23 @@ namespace PokerPlayer
     public abstract class PlayerBase : IPlayer
     {
         protected double cashe;
-        private readonly int id;
+        protected readonly string id;
 
-        public Func<double, int, double, Card[], double?> GetBet;
+        public Func<double, int, double, Card[], Bet> GetBet;
         public Func<Card[]> GetSelfCards;
 
-        protected PlayerBase(int id, double cashe)
+        protected PlayerBase(string id, double cashe)
         {
             this.cashe = cashe;
             this.id = id;
         }
 
-        public abstract double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable);
+        public abstract Bet MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable);
 
-        public double MakeForceBlind(double count)
+        public Bet MakeForceBlind(double count)
         {
             cashe -= count;
-            return count;
+            return new Bet(count, id);
         }
 
         public void AddCards(List<Card> cards)
@@ -41,13 +41,13 @@ namespace PokerPlayer
         
         
         public override int GetHashCode()
-            => id;
+            => id.GetHashCode();
         
 
         public override bool Equals(object obj)
             =>((PlayerBase) obj).id == id;
 
         public override string ToString()
-            => id.ToString();
+            => id;
     }
 }

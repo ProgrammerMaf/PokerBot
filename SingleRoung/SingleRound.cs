@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CombinationsComparer;
 using PokerObjects;
 using PokerPlayer;
 
@@ -16,7 +17,7 @@ namespace SingleRoung
     }
     public class SingleRound
     {
-        public List<double?> Bets;
+        public List<Bet> Bets;
         public List<PlayerBase> Players;
         public int PlayersCount;
         public readonly int Dealer;
@@ -28,14 +29,17 @@ namespace SingleRoung
         public List<Card> Deck;
         public List<Card> DeckOnTable;
 
+        private ICombinationsComparer comparer;
+
 
         public SingleRound(
             List<PlayerBase> players,
             List<Card> deck,
-            int countSmallBlind, int countAnte)
+            int countSmallBlind, int countAnte,
+            ICombinationsComparer comparer)
         {
 
-            Bets = new List<double?>();
+            Bets = new List<Bet>();
             Players = players;
             PlayersCount = players.Count;
             Dealer = 0;
@@ -45,6 +49,8 @@ namespace SingleRoung
             this.countAnte = countAnte;
             Deck = deck;
             DeckOnTable = new List<Card>();
+
+            this.comparer = comparer;
 
             foreach (var player in Players)
                 AddCardsPlayer(player);
@@ -56,12 +62,13 @@ namespace SingleRoung
         }
 
         public SingleRound(
-            List<double?> bets, List<PlayerBase> players,
+            List<Bet> bets, List<PlayerBase> players,
             List<Card> deck,
             List<Card> deckOnTable, 
             double pot,
             int dealer, Round round, 
-            int countSmallBlind, int countAnte)
+            int countSmallBlind, int countAnte,
+            ICombinationsComparer comparer)
         {
             
             Bets = bets;
@@ -75,6 +82,8 @@ namespace SingleRoung
             Deck = deck;
             DeckOnTable = deckOnTable;
 
+            this.comparer = comparer;
+
             Pot = pot;
             if (players.Count < 2 && round != Round.Finish)
                 throw new Exception("Не достаточное количество игроков.");
@@ -82,7 +91,7 @@ namespace SingleRoung
 
         private Card GetCardFormDeck()
         {
-            var rand = new Random(DateTime.Now.DayOfYear);
+            var rand = new Random(8);
 
             var indexCards = rand.Next(Deck.Count);
             var card = Deck[indexCards];
@@ -103,11 +112,11 @@ namespace SingleRoung
         {
             if (Round != Round.Finish)
                 throw new Exception("Попытка определить победителя, когда игра еще не была закончена.");
-            var playersWin = Players.ToArray();
+            var playersWin = Players.Take(1).ToArray();
             for (var i = 0; i < playersWin.Length; i++)
                 for (var j = 0; j < playersWin.Length; j++)
                 {
-                    if (CombinationsComparer.CombinationsComparer.CompareCombinations(
+                    if (comparer.CompareCombinations(
                         Players[i].GetSelfCards(), Players[j].GetSelfCards(), Deck.ToArray()) < 0)
                     {
                         var t = Players[i];
@@ -117,9 +126,8 @@ namespace SingleRoung
                 }
 
             var winer = new List<PlayerBase> {playersWin.First()};
-            var winers = playersWin.Where(e => 
-                CombinationsComparer
-                .CombinationsComparer.CompareCombinations(winer.First().GetSelfCards(), e.GetSelfCards(), Deck.ToArray()) == 0);
+            var winers = playersWin.Where(e =>
+                comparer.CompareCombinations(winer.First().GetSelfCards(), e.GetSelfCards(), Deck.ToArray()) == 0);
             foreach (var playerWin in winers)
                 playerWin.AddCashe(Pot/winers.Count());
 
@@ -144,9 +152,10 @@ namespace SingleRoung
 
                 DeckOnTable.Add(GetCardFormDeck());
                 DeckOnTable.Add(GetCardFormDeck());
+                DeckOnTable.Add(GetCardFormDeck());
                 return 
-                    new SingleRound(new List<double?>(), 
-                        Players, Deck, DeckOnTable, Pot, Dealer + 1, Round.Flop, countSmallBlind, countAnte);
+                    new SingleRound(new List<Bet>(), 
+                        Players, Deck, DeckOnTable, Pot, Dealer + 1, Round.Flop, countSmallBlind, countAnte, comparer);
             }
 
             if (Round == Round.Flop)
@@ -173,13 +182,13 @@ namespace SingleRoung
                 nRound = Round.Finish;
 
             return
-                new SingleRound(new List<double?>(),
-                    Players, Deck, DeckOnTable, Pot, Dealer + 1, nRound, countSmallBlind, countAnte);
+                new SingleRound(new List<Bet>(),
+                    Players, Deck, DeckOnTable, Pot, Dealer + 1, nRound, countSmallBlind, countAnte, comparer);
         }
 
         private void MakeBets(int shift = 0)
         {
-            var betsRound = new List<double?>();
+            var betsRound = new List<Bet>();
             double? maxBets = 0;
             bool isReapeat;
             do
@@ -197,9 +206,9 @@ namespace SingleRoung
                         PlayersCount--;
                     }
 
-                    if (bet > maxBets)
+                    if (bet.Value > maxBets.Value)
                     {
-                        maxBets = bet;
+                        maxBets = bet.Value;
                         isReapeat = true;
                     }
                     Bets.Add(bet);
@@ -207,8 +216,8 @@ namespace SingleRoung
                 }
             } while (isReapeat); 
 
-            Pot += Bets.Select(e => e ?? 0).Sum();
-            Bets = new List<double?>();
+            Pot += Bets.Select(e => e.Value).Sum();
+            Bets = new List<Bet>();
         }
     }
 

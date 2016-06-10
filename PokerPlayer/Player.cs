@@ -11,7 +11,7 @@ namespace PokerPlayer
     {
         private readonly Random randomGenerator;
 
-        public Player(int id, double cashe) 
+        public Player(string id, double cashe) 
             : base(id, cashe)
         {
             randomGenerator = new Random(0);
@@ -27,7 +27,7 @@ namespace PokerPlayer
             var value = minValue + randomNumber * (maxValue - minValue);
             return Math.Round(value, 1);
         }
-        public double? MakeBet(List<PlayerInRoundState> players, int selfNumber, Card[] hand, Card[] onTable)
+        public Bet MakeBet(List<PlayerInRoundState> players, int selfNumber, Card[] hand, Card[] onTable)
         {     
             double maxBetValue = players.Select(e => e.MadeBet.Value).Aggregate(Math.Max);
             double maxNewBet = players[selfNumber].RemainedCash;
@@ -37,13 +37,13 @@ namespace PokerPlayer
             if (InInterval(0, 0.2, randomNumber))
                 return null;    //Fold
             if (InInterval(0.2, 0.5, randomNumber))
-                return GetBetValue(minNewBet, maxNewBet);   //Raise
-            return minNewBet;   //Call
+                return new Bet(GetBetValue(minNewBet, maxNewBet), id);   //Raise
+            return new Bet(minNewBet, id);   //Call
         }
 
-        public override double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable)
+        public override Bet MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable)
         {
-            return 2;
+            return new Bet(2, id);
         }
     }
 }

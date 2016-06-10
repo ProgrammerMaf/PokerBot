@@ -7,7 +7,8 @@ using PokerObjects;
 
 namespace CombinationsComparer
 {
-    public static class CombinationsDetector
+    public static class CombinationsDetector 
+       
     {
         static int[] IndexArray = new[] { 0, 1, 2, 3, 4, 5, 6 };
         static Card[] SelectCards(Card[] sortedCards, params int[] selected)
@@ -175,7 +176,8 @@ namespace CombinationsComparer
         }
 
     }
-    public static class CombinationsComparer
+    public class CombinationsComparer
+        : ICombinationsComparer
     {
         static Func<Card[], Card[], Card[]>[] CombinationDetectors;
         static CombinationsComparer()
@@ -203,7 +205,7 @@ namespace CombinationsComparer
             }
             return 0;
         }
-        public static int CompareCombinations(Card[] firstPlayerHand, Card[] secondPlayerHand, Card[] onTable)
+        public int CompareCombinations(Card[] firstPlayerHand, Card[] secondPlayerHand, Card[] onTable)
         {
             //> 0, if first player wins
             //< 0, if second player wins

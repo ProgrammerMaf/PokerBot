@@ -9,9 +9,9 @@ namespace PokerPlayer
 {
     public interface IPlayer
     {
-        double? MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable);
+        Bet MakeBet(double cash, int playersOnTable, double callCost, Card[] onTable);
 
-        double MakeForceBlind(double count);
+        Bet MakeForceBlind(double count);
 
         void AddCashe(double count);
 

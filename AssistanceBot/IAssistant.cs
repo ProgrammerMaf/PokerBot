@@ -7,7 +7,7 @@ using PokerObjects;
 
 namespace AssistanceBot
 {
-    public interface IAssistanceBot
+    public interface IAssistant
     {
         Bet OfferBet(string playerId, GameState state, double moneyToCall, Card[] hand, Card[] onTable);
     }
